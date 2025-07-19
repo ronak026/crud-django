@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if employee %}Edit{% else %}Add{% endif %} Employee</title>
+    <style>
+      :root {
+        --primary-bg: #f4f6fb;
+        --card-bg: #fff;
+        --text-color: #222;
+        --accent: #4f8cff;
+        --button-bg: #4f8cff;
+        --button-hover: #2563eb;
+        --input-bg: #f0f2f5;
+        --border-radius: 12px;
+        --transition: 0.2s;
+      }
+      body.dark {
+        --primary-bg: #181a20;
+        --card-bg: #23262f;
+        --text-color: #f4f6fb;
+        --accent: #90cdf4;
+        --button-bg: #2563eb;
+        --button-hover: #4f8cff;
+        --input-bg: #23262f;
+      }
+      body {
+        background: var(--primary-bg);
+        color: var(--text-color);
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: background var(--transition), color var(--transition);
+      }
+      .container {
+        background: var(--card-bg);
+        padding: 2rem 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        max-width: 400px;
+        width: 100%;
+        margin: 2rem 0;
+        transition: background var(--transition);
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      input[type="text"],
+      input[type="email"] {
+        padding: 0.8rem 1rem;
+        border: 1px solid #e0e4ea;
+        border-radius: var(--border-radius);
+        background: var(--input-bg);
+        color: var(--text-color);
+        font-size: 1rem;
+        outline: none;
+        transition: border var(--transition), background var(--transition);
+      }
+      input:focus {
+        border-color: var(--accent);
+        background: #eaf1fb;
+      }
+      body.dark input:focus {
+        background: #23262f;
+      }
+      button[type="submit"] {
+        background: var(--button-bg);
+        color: #fff;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0.9rem 1rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+        transition: background var(--transition), transform var(--transition);
+      }
+      button[type="submit"]:hover {
+        background: var(--button-hover);
+        transform: translateY(-2px) scale(1.03);
+      }
+      .dark-toggle {
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+        background: none;
+        border: none;
+        color: var(--accent);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color var(--transition);
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 1.2rem 0.5rem;
+          max-width: 98vw;
+        }
+        .dark-toggle {
+          right: 1rem;
+          top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      class="dark-toggle"
+      onclick="document.body.classList.toggle('dark')"
+    >
+      🌙
+    </button>
+    <div class="container">
+      <h2>{{ employee|default:"Add" }} Employee</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="name"
+          value="{{ employee.name|default:'' }}"
+          placeholder="Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          value="{{ employee.email|default:'' }}"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="text"
+          name="position"
+          value="{{ employee.position|default:'' }}"
+          placeholder="Position"
+          required
+        />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+    <script>
+      // Persist dark mode
+      const dark = localStorage.getItem("darkMode") === "true";
+      if (dark) document.body.classList.add("dark");
+      document.querySelector(".dark-toggle").onclick = function () {
+        document.body.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark")
+        );
+      };
+    </script>
+  </body>
+</html>
