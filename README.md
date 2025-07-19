@@ -53,7 +53,9 @@ A modern, responsive web application for managing employee records, built with D
 
 ## Screenshots
 
-> Add screenshots of your UI here for better presentation.
+<img width="1919" height="933" alt="image" src="https://github.com/user-attachments/assets/d3e4e5f3-c18b-4d9e-84b7-f0613db2658e" />
+<img width="1919" height="933" alt="image" src="https://github.com/user-attachments/assets/0ebb7d96-c3a8-434f-b69b-1c57191e5374" />
+
 
 ## License
 
